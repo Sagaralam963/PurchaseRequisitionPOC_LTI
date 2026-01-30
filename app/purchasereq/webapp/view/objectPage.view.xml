@@ -1,0 +1,275 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.uxap"
+	xmlns:layout="sap.ui.layout"
+	xmlns:m="sap.m"
+    xmlns:f="sap.ui.layout.form"
+	controllerName="ns.purchasereq.controller.objectPage"
+	height="100%">
+	<ObjectPageLayout id="ObjectPageLayout" enableLazyLoading="true" upperCaseAnchorBar="false">
+		<!-- <headerTitle>
+			<ObjectPageDynamicHeaderTitle>
+				
+				<expandedHeading>
+					<m:Title text="{PR_DetailModel>/PR_Detail/0/PurchaseRequisition}" wrapping="true"/>
+				</expandedHeading>
+
+				<snappedHeading>
+					<m:FlexBox fitContainer="true" alignItems="Center">
+						<m:Title text="{PR_DetailModel>/PR_Detail/0/PurchaseRequisition}" wrapping="true"/>
+					</m:FlexBox>
+				</snappedHeading>
+
+				<actions>
+					<m:Button text="Edit" type="Emphasized"/>
+					<m:Button type="Transparent" text="Delete"/>
+					<m:Button type="Transparent" text="Copy"/>
+					<m:OverflowToolbarButton icon="sap-icon://action" type="Transparent" text="Share" tooltip="action"/>
+				</actions>
+
+                
+			</ObjectPageDynamicHeaderTitle>
+		</headerTitle> -->
+
+        
+<headerTitle>
+  <ObjectPageHeader
+    objectTitle="{PR_DetailModel>/PR_Detail/0/PurchaseRequisition}"
+    objectSubtitle="{PR_DetailModel>/PR_Detail/0/PurchaseRequisitionItemText}"
+    showMarkers="false">
+
+    <actions>
+      <m:Button text="Edit" type="Emphasized"/>
+      <m:Button type="Transparent" text="Delete"/>
+      <m:Button type="Transparent" text="Copy"/>
+      <m:OverflowToolbarButton icon="sap-icon://action" type="Transparent" text="Share" tooltip="action"/>
+    </actions>
+
+     
+
+  </ObjectPageHeader>
+
+ 
+
+</headerTitle>
+
+
+		<headerContent>
+			<m:FlexBox wrap="Wrap" fitContainer="true" >
+				
+				 <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+      <m:ObjectStatus
+        text="{= ${PR_DetailModel>/PR_Detail/0/ProcessingStatus} === 'N' ? 'Not Processed (N)' :
+                    ${PR_DetailModel>/PR_Detail/0/ProcessingStatus} === 'R' ? 'Released (R)' :
+                    ${PR_DetailModel>/PR_Detail/0/ProcessingStatus} || 'Unknown' }"
+        state="{= ${PR_DetailModel>/PR_Detail/0/ProcessingStatus} === 'R' ? 'Success' :
+                    ${PR_DetailModel>/PR_Detail/0/ProcessingStatus} === 'N' ? 'Warning' : 'None' }"/>
+     </layout:VerticalLayout>
+
+				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+          <m:ObjectNumber
+            number="{PR_DetailModel>/PR_Detail/0/RequestedQuantity}"
+            unit="{PR_DetailModel>/PR_Detail/0/BaseUnit}"
+            title="Requested Quantity"/>
+        </layout:VerticalLayout>
+
+        <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+          <m:ObjectNumber
+            number="{PR_DetailModel>/PR_Detail/0/ItemNetAmount}"
+            unit="{PR_DetailModel>/PR_Detail/0/PurReqnItemCurrency}"
+            title="Item Net Amount"/>
+        </layout:VerticalLayout>
+
+        <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+          <m:ObjectStatus
+            text="{PR_DetailModel>/PR_Detail/0/PurReqnReleaseStatus}"
+            title="Release Status"/>
+        </layout:VerticalLayout>
+			</m:FlexBox>
+		</headerContent>
+
+<sections>
+    
+            <ObjectPageSection titleUppercase="false" title="Overview">
+				<subSections>
+					<ObjectPageSubSection titleUppercase="false">
+						<blocks>
+							 <f:SimpleForm
+                editable="false"
+                layout="ResponsiveGridLayout"
+                labelSpanXL="2" labelSpanL="2" labelSpanM="2"
+                emptySpanXL="2" emptySpanL="2" emptySpanM="2"
+                columnsXL="2" columnsL="2" columnsM="2">
+
+                <m:Label text="PR Number"/>
+                <m:ObjectIdentifier
+                  title="{PR_DetailModel>/PR_Detail/0/PurchaseRequisition}"
+                  text="{PR_DetailModel>/PR_Detail/0/PurchaseRequisitionType}"/>
+
+                <m:Label text="Item"/>
+                <m:Text text="{PR_DetailModel>/PR_Detail/0/PurchaseRequisitionItem}"/>
+
+                <m:Label text="Description"/>
+                <m:Text text="{PR_DetailModel>/PR_Detail/0/PurchaseRequisitionItemText}"/>
+
+                <m:Label text="Material"/>
+                <m:ObjectIdentifier
+                  title="{PR_DetailModel>/PR_Detail/0/Material}"
+                  text="{PR_DetailModel>/PR_Detail/0/MaterialGroup}"/>
+
+                <m:Label text="Quantity"/>
+                <m:ObjectNumber
+                  number="{PR_DetailModel>/PR_Detail/0/RequestedQuantity}"
+                  unit="{PR_DetailModel>/PR_Detail/0/BaseUnit}"/>
+
+                <m:Label text="Unit Price"/>
+                <m:ObjectNumber
+                  number="{PR_DetailModel>/PR_Detail/0/PurchaseRequisitionPrice}"
+                  unit="{PR_DetailModel>/PR_Detail/0/PurReqnItemCurrency}"/>
+
+                <m:Label text="Item Net Amount"/>
+                <m:ObjectNumber
+                  number="{PR_DetailModel>/PR_Detail/0/ItemNetAmount}"
+                  unit="{PR_DetailModel>/PR_Detail/0/PurReqnItemCurrency}"/>
+
+                <m:Label text="Delivery Date"/>
+                <m:Text text="{PR_DetailModel>/PR_Detail/0/DeliveryDate}"/>
+
+                <m:Label text="Created On"/>
+                <m:Text text="{PR_DetailModel>/PR_Detail/0/CreationDate}"/>
+
+                <m:Label text="Created By"/>
+                <m:Text text="{PR_DetailModel>/PR_Detail/0/CreatedByUser}"/>
+
+              </f:SimpleForm>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+
+
+            <ObjectPageSection titleUppercase="false" title="Logistics">
+				<subSections>
+					<ObjectPageSubSection titleUppercase="false">
+						<blocks>
+							<f:SimpleForm
+                editable="false"
+                layout="ResponsiveGridLayout"
+                labelSpanXL="3" labelSpanL="3" labelSpanM="12"
+                emptySpanXL="1" emptySpanL="1" emptySpanM="0"
+                columnsXL="2" columnsL="2" columnsM="1">
+
+                <m:Label text="Plant"/>
+                <m:Text text="{PR_DetailModel>/PR_Detail/0/Plant}"/>
+
+                <m:Label text="Company Code"/>
+                <m:Text text="{PR_DetailModel>/PR_Detail/0/CompanyCode}"/>
+
+                <m:Label text="Purchasing Organization"/>
+                <m:Text text="{PR_DetailModel>/PR_Detail/0/PurchasingOrganization}"/>
+
+                <m:Label text="Purchasing Group"/>
+                <m:Text text="{PR_DetailModel>/PR_Detail/0/PurchasingGroup}"/>
+
+                <m:Label text="Storage Location"/>
+                <m:Text text="{PR_DetailModel>/PR_Detail/0/StorageLocation}"/>
+
+                <m:Label text="Goods Receipt Expected"/>
+                <m:ObjectStatus
+                  text="{= ${PR_DetailModel>/PR_Detail/0/GoodsReceiptIsExpected} ? 'Yes' : 'No' }"
+                  state="{= ${PR_DetailModel>/PR_Detail/0/GoodsReceiptIsExpected} ? 'Success' : 'None' }"/>
+
+                <m:Label text="Invoice Expected"/>
+                <m:ObjectStatus
+                  text="{= ${PR_DetailModel>/PR_Detail/0/InvoiceIsExpected} ? 'Yes' : 'No' }"
+                  state="{= ${PR_DetailModel>/PR_Detail/0/InvoiceIsExpected} ? 'Success' : 'None' }"/>
+
+              </f:SimpleForm>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+
+
+            <ObjectPageSection titleUppercase="false" title="Commercial">
+				<subSections>
+					<ObjectPageSubSection titleUppercase="false">
+						<blocks>
+							<f:SimpleForm
+                editable="false"
+                layout="ResponsiveGridLayout"
+                labelSpanXL="3" labelSpanL="3" labelSpanM="12"
+                emptySpanXL="1" emptySpanL="1" emptySpanM="0"
+                columnsXL="2" columnsL="2" columnsM="1">
+
+                <m:Label text="Currency"/>
+                <m:Text text="{PR_DetailModel>/PR_Detail/0/PurReqnItemCurrency}"/>
+
+                <m:Label text="Price Quantity"/>
+                <m:Text text="{PR_DetailModel>/PR_Detail/0/PurReqnPriceQuantity}"/>
+
+                <m:Label text="Supplier"/>
+                <m:Text text="{PR_DetailModel>/PR_Detail/0/Supplier}"/>
+
+                <m:Label text="Info Record"/>
+                <m:Text text="{PR_DetailModel>/PR_Detail/0/PurchasingInfoRecord}"/>
+
+                <m:Label text="Contract"/>
+                <m:Text text="{PR_DetailModel>/PR_Detail/0/PurchaseContract}"/>
+
+                <m:Label text="Ordered Quantity"/>
+                <m:ObjectNumber
+                  number="{PR_DetailModel>/PR_Detail/0/OrderedQuantity}"
+                  unit="{PR_DetailModel>/PR_Detail/0/BaseUnit}"/>
+
+              </f:SimpleForm>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+
+
+
+             <ObjectPageSection titleUppercase="false" title="Status &amp; Release">
+				<subSections>
+					<ObjectPageSubSection titleUppercase="false">
+						<blocks>
+							 <f:SimpleForm
+                editable="false"
+                layout="ResponsiveGridLayout"
+                labelSpanXL="3" labelSpanL="3" labelSpanM="12"
+                emptySpanXL="1" emptySpanL="1" emptySpanM="0"
+                columnsXL="2" columnsL="2" columnsM="1">
+
+                <m:Label text="Processing Status"/>
+                <m:ObjectStatus
+                  text="{PR_DetailModel>/PR_Detail/0/ProcessingStatus}"
+                  state="{= ${PR_DetailModel>/PR_Detail/0/ProcessingStatus} === 'R' ? 'Success' :
+                              ${PR_DetailModel>/PR_Detail/0/ProcessingStatus} === 'N' ? 'Warning' : 'None' }"/>
+
+                <m:Label text="Release Status"/>
+                <m:Text text="{PR_DetailModel>/PR_Detail/0/PurReqnReleaseStatus}"/>
+
+                <m:Label text="Release Code"/>
+                <m:Text text="{PR_DetailModel>/PR_Detail/0/ReleaseCode}"/>
+
+                <m:Label text="Release Date"/>
+                <m:Text text="{PR_DetailModel>/PR_Detail/0/PurchaseRequisitionReleaseDate}"/>
+
+                <m:Label text="Last Changed"/>
+                <m:Text text="{PR_DetailModel>/PR_Detail/0/LastChangeDateTime}"/>
+
+                <m:Label text="Is Closed"/>
+                <m:ObjectStatus
+                  text="{= ${PR_DetailModel>/PR_Detail/0/IsClosed} ? 'Yes' : 'No' }"
+                  state="{= ${PR_DetailModel>/PR_Detail/0/IsClosed} ? 'Success' : 'None' }"/>
+
+              </f:SimpleForm>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+
+</sections>
+		
+	</ObjectPageLayout>
+</mvc:View>

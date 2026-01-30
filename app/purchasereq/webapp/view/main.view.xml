@@ -1,0 +1,165 @@
+
+<mvc:View controllerName="ns.purchasereq.controller.main"
+    xmlns="sap.ui.table"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:u="sap.ui.unified"
+    xmlns:c="sap.ui.core"
+    xmlns:m="sap.m"
+    xmlns:p="sap.m.plugins">
+
+  <m:Page showHeader="false" enableScrolling="false" class="sapUiContentPadding">
+    <m:content>
+
+    <m:Title id="title" text="Purchase Requisition Items" />
+
+			  <u:FileUploader
+                    id="fileUploader"
+                    class="FiluploderClass"
+                    change="onFileSelected"
+                   
+                    icon="sap-icon://upload"
+                    placeholder="choose file..."
+                    fileType="pdf,jpg,jpeg,png"
+                    maximumFileSize="5" />
+
+                    
+      <Table
+        id="prTable"
+        rows="{/A_PurchaseRequisitionItem}"
+        selectionMode="MultiToggle"
+        paste="onPaste"
+        ariaLabelledBy="title"
+        enableBusyIndicator="true"
+        enableGrouping="true" >
+
+       
+        <extension>
+          <m:OverflowToolbar style="Clear">
+          
+            <m:SearchField
+              id="sfSearch"
+              width="18rem"
+              placeholder="Search Description / Material"
+              liveChange=".onSearchLiveChange" />
+
+             <m:ToolbarSeparator />
+
+        
+            <m:ToolbarSpacer />
+      
+
+	<m:ComboBox
+  id="cbPlant"
+  placeholder="Select Plant"
+				items="{
+					path: '/A_PurchaseRequisitionItem'
+					
+				}"
+				loadItems="handleLoadItems">
+				<c:ListItem key="{Plant}" text="{Plant}"/>
+			</m:ComboBox>
+
+
+          
+            <m:ComboBox id="cbStatus" width="14rem" selectionChange=".onFilterChange" placeholder="Status">
+              <c:Item key="" text="All Statuses" />
+              <c:Item key="N" text="Not Processed (N)" />
+              <c:Item key="R" text="Released (R)" />
+             
+            </m:ComboBox>
+        
+        
+          
+            <m:Button text="Reset" type="Transparent" press=".onResetFilters" />
+
+            
+<m:Button
+  id="btnExportExcel"
+  text="Export Excel"
+  type="Emphasized"
+  icon="sap-icon://excel-attachment"
+  press=".onExportExcel"/>
+
+
+          </m:OverflowToolbar>
+        </extension>
+
+        <columns>
+        
+          <Column width="11rem" sortProperty="PurchaseRequisition" sorted="true" sortOrder="Descending">
+            <m:Label text="Purchase Requisition" />     
+                <template>
+                    <m:Link text="{PurchaseRequisition}" press=".onCellLinkPress" />
+                  </template>
+          </Column>
+
+         
+          <!-- <Column width="6rem" sortProperty="PurchaseRequisitionItem">
+            <m:Label text="Item" />
+            <template>
+              <m:Text text="{PurchaseRequisitionItem}" wrapping="false" />
+            </template>
+          </Column> -->
+
+
+         
+          <Column width="18rem" sortProperty="PurchaseRequisitionItemText">
+            <m:Label text="Description" />
+            <template>
+              <m:Text text="{PurchaseRequisitionItemText}" />
+            </template>
+          </Column>
+
+       
+          <!-- <Column width="10rem" sortProperty="Material">
+            <m:Label text="Material" />
+            <template>
+              <m:Text text="{Material}" wrapping="false" />
+            </template>
+          </Column> -->
+
+        
+          <Column width="10rem" sortProperty="RequestedQuantity">
+            <m:Label text="Quantity" />
+            <template>
+              <m:Text text="{parts: ['RequestedQuantity','BaseUnit'], formatter: '.formatQuantity'}" />
+            </template>
+          </Column>
+
+         
+          <Column width="8rem" sortProperty="Plant">
+            <m:Label text="Plant" />
+            <template>
+              <m:Text text="{Plant}" wrapping="false" />
+            </template>
+          </Column>
+
+       
+          <Column width="12rem" sortProperty="DeliveryDate">
+            <m:Label text="Delivery Date" />
+            <template>
+              <m:Text text="{path: 'DeliveryDate', formatter: '.formatDate'}" />
+            </template>
+          </Column>
+
+        
+          <Column width="10rem" sortProperty="CreatedByUser">
+            <m:Label text="Created By" />
+            <template>
+              <m:Text text="{CreatedByUser}" wrapping="false" />
+            </template>
+          </Column>
+
+         
+          <Column width="8rem" sortProperty="ProcessingStatus">
+            <m:Label text="Status" />
+            <template>
+              <m:ObjectStatus text="{ProcessingStatus}" />
+            </template>
+          </Column>
+        </columns>
+
+      </Table>
+    </m:content>
+  </m:Page>
+</mvc:View>
